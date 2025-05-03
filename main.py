@@ -1,48 +1,41 @@
-from collections import defaultdict
+from stats import get_word_count, get_character_count, print_character_count
+# stats.py
+import sys
 
-def main():
-    path = "books/frankenstein.txt"
-    text = get_text(path)
-    word_count = get_word_count(text)
-    character_count = get_character_count(text)
-
-    print(f"Analysis of {path}")
-    print(f"Word Count: {word_count}")
-    print_character_count(character_count)
-    print("End of Analysis.")
-
-def get_text(path):
-    with open(path) as f:
-        return f.read()
-
-def get_word_count(text):
-    return len(text.split())
-
-def get_character_count(text):
-    letter_dict = defaultdict(int)
-    for char in text:
-        letter_dict[char.lower()] += 1
-    return letter_dict
-
-def sort_character_count_list(dict):
-    new_list = []
-    for key in dict:
-        if key.isalpha():
-            temp_dict = {}
-            temp_dict["letter"] = key
-            temp_dict["count"] = dict[key]
-            new_list.append(temp_dict)
-    new_list.sort(reverse=True, key=sort_on)
-    return new_list
-
-def print_character_count(dict):
-    sorted_list = sort_character_count_list(dict)
-    for mini_dict in sorted_list:
-        print()
-        print("The '" + str(mini_dict["letter"]) + "' character was found " + str(mini_dict["count"]) + " times.")
-
-def sort_on(dict):
-    return dict["count"]
+def get_book_text(path_to_file):
+    """
+    Reads the contents of a file and returns it as a string.
+    
+    Args:
+        path_to_file (str): The path to the file to be read.
+        
+    Returns:
+        str: The contents of the file.
+    """
+    
+    # Open the file in read mode and return its contents
+    with open(path_to_file) as f:
+        file_contents = f.read()
+    return file_contents
 
 if __name__ == '__main__':
-    main()
+    # Check if sys.argv has two entries
+    if len(sys.argv) < 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    
+    # Define the path to the book file
+    path = sys.argv[1]    
+
+    # Get the text from the book file
+    text = get_book_text(path)
+    
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {path}...")
+    print("----------- Word Count ----------")
+    print(f"Found {get_word_count(text)} total words")
+    print("--------- Character Count -------")
+    print_character_count(get_character_count(text))
+    print("============= END ===============")
+
+    
