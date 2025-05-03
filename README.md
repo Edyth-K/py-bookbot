@@ -1,4 +1,3 @@
-# py-bookbot
-Python command-line application that does static analysis on text files
+# bookbot
 
-Reads text file and prints word count as well as character count for alphabetic characters.
+BookBot is my first [Boot.dev](https://www.boot.dev) project!
